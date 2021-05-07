@@ -1,5 +1,5 @@
 {
-  "name": "acadamy",
+  "name": "academy",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -10,9 +10,26 @@
   "dependencies": {
     "@material-ui/core": "^4.11.4",
     "axios": "^0.21.1",
+    "dotenv": "^9.0.0",
     "next": "10.2.0",
     "next-i18next": "^8.2.0",
+    "next-redux-wrapper": "^6.0.2",
     "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react-dom": "17.0.2",
+    "react-redux": "^7.2.4",
+    "redux": "^4.1.0",
+    "redux-actions": "^2.6.5",
+    "redux-devtools-extension": "^2.13.9",
+    "redux-saga": "^1.1.3",
+    "reduxsauce": "^1.2.0",
+    "sass": "^1.32.12",
+    "universal-cookie": "^4.0.4"
+  },
+  "devDependencies": {
+    "eslint": "^5.2.0",
+    "eslint-config-airbnb": "^17.0.0",
+    "eslint-plugin-import": "^2.13.0",
+    "eslint-plugin-jsx-a11y": "^6.1.1",
+    "eslint-plugin-react": "^7.10.0"
   }
 }
