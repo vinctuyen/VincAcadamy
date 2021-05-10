@@ -1,5 +1,7 @@
 // next.config.js
-module.exports = {
+const withImages = require('next-images')
+
+module.exports = (withImages({
   i18n: {
     // These are all the locales you want to support in
     // your application
@@ -25,4 +27,4 @@ module.exports = {
     //   },
     // ],
   },
-};
+}));

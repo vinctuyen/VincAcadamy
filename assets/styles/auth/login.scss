@@ -1,0 +1,131 @@
+.login {
+  background-image: url("../../images/login_bg.jpg");
+  min-height: 100vh;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .container {
+    box-shadow: rgb(0 0 0 / 16%) 0px 3px 6px, rgb(0 0 0 / 23%) 0px 3px 6px;
+    width: 80vw;
+    background-color: #fff;
+    border-radius: 10px;
+    .logo {
+      background-image: url("../../images/logo_full.png");
+      min-height: 50px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      margin-top: 20px;
+      margin-left: 50px;
+    }
+    .form {
+      margin-top: 40px;
+      margin-bottom: 80px;
+      display: flex;
+      justify-content: space-between;
+      .introduce {
+        width: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-left: 50px;
+      }
+      .content {
+        padding: 0 100px 0 50px;
+        width: 50%;
+        .form_title {
+          .title_welcome {
+            font-size: 40px;
+            padding-bottom: 20px;
+            color: #333;
+          }
+          .title_note {
+            padding-bottom: 50px;
+            color: #666;
+          }
+        }
+        .form_input {
+          padding: 0 120px;
+
+          .form_input--email {
+            padding-bottom: 30px;
+            &:last-child {
+              padding-bottom: 10px;
+            }
+            .icon {
+                min-height: 58px;
+            }
+            svg {
+              fill: #dcdcdc;
+              width: 32px;
+              height: 32px;
+              margin-top: 7px;
+            }
+            div {
+              width: 100%;
+            }
+            .email,
+            .password {
+              margin-left: 15px;
+              .MuiInputBase-root {
+                &::before {
+                  left: -60px;
+                }
+                &::after {
+                  left: -60px;
+                }
+              }
+            }
+          }
+          .remember-forgot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            .remember {
+              color: #666;
+            }
+            .forgot {
+              color: #666;
+            }
+          }
+          .register {
+            margin-left: 20px;
+            .MuiButton-label {
+              background: -webkit-linear-gradient(
+                45deg,
+                #fe6b8b 30%,
+                #ff8e53 90%
+              );
+              -webkit-background-clip: text;
+              -webkit-text-fill-color: transparent;
+            }
+          }
+        }
+        .form_link {
+          margin-top: 20px;
+          padding-left: 100px;
+          .login-with {
+            color: #666;
+          }
+          .icon-links {
+            margin-top: 20px;
+            padding-left: 10px;
+            img {
+              width: 32px;
+              margin-right: 19px;
+            }
+          }
+        }
+      }
+    }
+  }
+  .start-center {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  .w-100 {
+    width: 100%;
+  }
+}
