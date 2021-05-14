@@ -5,6 +5,7 @@ import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 import MailOutlineIcon from "@material-ui/icons/MailOutline";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Checkbox from "@material-ui/core/Checkbox";
+import { withRouter } from "next/router";
 
 import BgImage from "../assets/images/login_bg_study.jpg";
 import facebook from "../assets/images/facebook.png";
@@ -41,7 +42,7 @@ const styleRegisterBtn = {
   padding: "0 25px",
   boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
 };
-export default class Login extends React.Component {
+class Login extends React.Component {
   state = {
     formData: {
       email: "",
@@ -76,9 +77,7 @@ export default class Login extends React.Component {
   };
 
   handleSubmit = () => {
-    this.setState({ submitted: true }, () => {
-      setTimeout(() => this.setState({ submitted: false }), 5000);
-    });
+    this.props.router.push("/");
   };
   render() {
     const { formData, submitted, canSubmit } = this.state;
@@ -157,10 +156,7 @@ export default class Login extends React.Component {
                       name="password"
                       type="password"
                       value={formData.password}
-                      validators={[
-                        "required",
-                        "min: 6",
-                      ]}
+                      validators={["required", "min: 6"]}
                       errorMessages={[
                         "this field is required",
                         "Password min 6 sign",
@@ -212,3 +208,4 @@ export default class Login extends React.Component {
     );
   }
 }
+export default withRouter(Login);
