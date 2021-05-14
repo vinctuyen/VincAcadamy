@@ -1,13 +1,9 @@
 import React from "react";
 import { Carousel } from "react-responsive-carousel";
-import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import InputLabel from "@material-ui/core/InputLabel";
-import EmailIcon from "@material-ui/icons/Email";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 import MailOutlineIcon from "@material-ui/icons/MailOutline";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import InputBase from "@material-ui/core/InputBase";
 import Checkbox from "@material-ui/core/Checkbox";
 
 import BgImage from "../assets/images/login_bg_study.jpg";
@@ -15,7 +11,7 @@ import facebook from "../assets/images/facebook.png";
 import google from "../assets/images/google.png";
 import twitter from "../assets/images/twitter.png";
 
-const style = {
+const styleLoginBtn = {
   background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
   borderRadius: 3,
   border: 0,
@@ -23,6 +19,17 @@ const style = {
   height: 40,
   padding: "0 25px",
   boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
+};
+
+const styleDisabledLoginBtn = {
+  color: "rgba(0, 0, 0, 0.26)",
+  boxShadow: "none",
+  backgroundColor: "rgba(0, 0, 0, 0.12)",
+  borderRadius: 3,
+  border: 0,
+  color: "white",
+  height: 40,
+  padding: "0 25px",
 };
 const styleRegisterBtn = {
   border: "1px solid",
@@ -42,7 +49,17 @@ export default class Login extends React.Component {
       remember: true,
     },
     submitted: false,
+    canSubmit: false,
   };
+  componentDidMount() {
+    // custom rule will have name 'min'
+    ValidatorForm.addValidationRule("min", (value, min) => {
+      if (value.length < min) {
+        return false;
+      }
+      return true;
+    });
+  }
   handleChange = (event) => {
     const { formData } = this.state;
     if (event.target.name == "remember") {
@@ -51,6 +68,11 @@ export default class Login extends React.Component {
       formData[event.target.name] = event.target.value;
     }
     this.setState({ formData });
+    if (this.state.formData.email && this.state.formData.password) {
+      this.setState({ canSubmit: true });
+    } else {
+      this.setState({ canSubmit: false });
+    }
   };
 
   handleSubmit = () => {
@@ -59,7 +81,8 @@ export default class Login extends React.Component {
     });
   };
   render() {
-    const { formData, submitted } = this.state;
+    const { formData, submitted, canSubmit } = this.state;
+    const styleLogin = canSubmit ? styleLoginBtn : styleDisabledLoginBtn;
 
     return (
       <div className="login">
@@ -124,7 +147,7 @@ export default class Login extends React.Component {
                     />
                   </div>
                   <div className="start-center form_input--email">
-                    <span>
+                    <span className="icon">
                       <LockOutlinedIcon />
                     </span>
                     <TextValidator
@@ -132,9 +155,16 @@ export default class Login extends React.Component {
                       onChange={this.handleChange}
                       className="password w-100"
                       name="password"
+                      type="password"
                       value={formData.password}
-                      validators={["required"]}
-                      errorMessages={["this field is required"]}
+                      validators={[
+                        "required",
+                        "min: 6",
+                      ]}
+                      errorMessages={[
+                        "this field is required",
+                        "Password min 6 sign",
+                      ]}
                     />
                   </div>
                   <div className="remember-forgot">
@@ -152,8 +182,8 @@ export default class Login extends React.Component {
                     color="primary"
                     variant="contained"
                     type="submit"
-                    style={style}
-                    disabled={submitted}
+                    style={styleLogin}
+                    disabled={!canSubmit}
                   >
                     Login
                   </Button>

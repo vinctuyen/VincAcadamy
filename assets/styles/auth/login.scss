@@ -49,17 +49,19 @@
 
           .form_input--email {
             padding-bottom: 30px;
+            position: relative;
             &:last-child {
               padding-bottom: 10px;
             }
             .icon {
-                min-height: 58px;
+              min-height: 58px;
+              padding-top: 16px;
             }
             svg {
               fill: #dcdcdc;
               width: 32px;
               height: 32px;
-              margin-top: 7px;
+              // margin-top: 7px;
             }
             div {
               width: 100%;
@@ -127,5 +129,9 @@
   }
   .w-100 {
     width: 100%;
+  }
+  .MuiFormHelperText-root.Mui-error {
+    position: absolute;
+    bottom: -22px;
   }
 }
