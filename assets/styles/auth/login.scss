@@ -8,6 +8,9 @@
   .container {
     box-shadow: rgb(0 0 0 / 16%) 0px 3px 6px, rgb(0 0 0 / 23%) 0px 3px 6px;
     width: 80vw;
+    @media only screen and (max-width: 1400px) {
+      width: 70vw;
+    }
     background-color: #fff;
     border-radius: 10px;
     .logo {
@@ -17,21 +20,34 @@
       background-repeat: no-repeat;
       margin-top: 20px;
       margin-left: 50px;
+      @media only screen and (max-width: 1400px) {
+        margin-top: 10px;
+      }
     }
     .form {
       margin-top: 40px;
       margin-bottom: 80px;
       display: flex;
       justify-content: space-between;
+      @media only screen and (max-width: 1400px) {
+        margin-top: 0px;
+        margin-bottom: 20px;
+      }
       .introduce {
         width: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
         padding-left: 50px;
+        @media only screen and (max-width: 1400px) {
+          padding-left: 25px;
+        }
       }
       .content {
         padding: 0 100px 0 50px;
+        @media only screen and (max-width: 1400px) {
+          padding: 0 30px 0 20px;
+        }
         width: 50%;
         .form_title {
           .title_welcome {
@@ -42,13 +58,21 @@
           .title_note {
             padding-bottom: 50px;
             color: #666;
+            @media only screen and (max-width: 1400px) {
+              padding-bottom: 20px;
+            }
           }
         }
         .form_input {
           padding: 0 120px;
-
+          @media only screen and (max-width: 1400px) {
+            padding: 0 10px;
+          }
           .form_input--email {
             padding-bottom: 30px;
+            @media only screen and (max-width: 1400px) {
+              padding-bottom: 15px;
+            }
             position: relative;
             &:last-child {
               padding-bottom: 10px;
@@ -84,6 +108,9 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
+            @media only screen and (max-width: 1400px) {
+              margin-bottom: 10px;
+            }
             .remember {
               color: #666;
             }
@@ -107,12 +134,20 @@
         .form_link {
           margin-top: 20px;
           padding-left: 100px;
+          @media only screen and (max-width: 1400px) {
+            padding-left: 10px;
+            margin-top: 10px;
+          }
           .login-with {
             color: #666;
           }
           .icon-links {
             margin-top: 20px;
             padding-left: 10px;
+            @media only screen and (max-width: 1400px) {
+              padding-left: 0;
+              margin-top: 10px;
+            }
             img {
               width: 32px;
               margin-right: 19px;
