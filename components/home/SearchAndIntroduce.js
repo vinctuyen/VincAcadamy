@@ -11,7 +11,7 @@ import React, { useState, useRef, useEffect } from "react";
 function Categories() {
   const menu = ["Item1", "Item2", "Item3", "Item4"];
   const [checkedAll, setCheckedAll] = useState(true);
-  const [checked, setChecked] = useState([]);
+  const [checked, setChecked] = useState(menu);
   const [isShow, setIsShow] = useState(false);
   const wrapperRef = useRef(null);
   useEffect(() => {
