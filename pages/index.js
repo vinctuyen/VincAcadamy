@@ -6,6 +6,7 @@ export default function Home() {
     <div className>
       <Nav />
       <SearchAndIntroduce />
+      <div className="divide"></div>
     </div>
   );
 }

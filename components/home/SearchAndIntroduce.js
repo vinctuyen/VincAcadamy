@@ -2,13 +2,16 @@ import Container from "@material-ui/core/Container";
 import { Carousel } from "react-responsive-carousel";
 import BgImage from "../../assets/images/login_bg_study.jpg";
 import ArrowDown from "../share/icons/ArrowDown";
+import SearchIcon from "../share/icons/Search";
 import Checkbox from "@material-ui/core/Checkbox";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
+import InputBase from "@material-ui/core/InputBase";
 import React, { useState, useRef, useEffect } from "react";
 
 function Categories() {
-  const menu = ["All categories", "Item1", "Item2", "Item3", "Item4"];
-  const [checked, setChecked] = useState("All categories");
+  const menu = ["Item1", "Item2", "Item3", "Item4"];
+  const [checkedAll, setCheckedAll] = useState(true);
+  const [checked, setChecked] = useState([]);
   const [isShow, setIsShow] = useState(false);
   const wrapperRef = useRef(null);
   useEffect(() => {
@@ -22,27 +25,68 @@ function Categories() {
       setIsShow(false);
     }
   };
+  const updateArr = (arr, item) => {
+    let newArr = [...arr];
+    if (!newArr.includes(item)) {
+      newArr.push(item);
+    } else {
+      let index = newArr.indexOf(item);
+      newArr.splice(index, 1);
+    }
+    // check select all
+    if (newArr.length == menu.length) {
+      setCheckedAll(true);
+    } else {
+      setCheckedAll(false);
+    }
+    return newArr;
+  };
   function SelectItem(item) {
-    setChecked(item);
-    // setIsShow(false)
+    let newSelect = updateArr(checked, item);
+    setChecked(newSelect);
   }
+
+  const SelectAllItem = () => {
+    if (checkedAll) {
+      setChecked([]);
+      setCheckedAll(false);
+    } else {
+      setChecked(menu);
+      setCheckedAll(true);
+    }
+  };
 
   return (
     <div className="dropdown-search" ref={wrapperRef}>
       <div className="content" onClick={() => setIsShow(!isShow)}>
-        {checked}
+        <div className="list-selected">
+          {checkedAll && "All categories"}
+          {!checked.length && "All categories"}
+          {!checkedAll &&
+            checked.map(
+              (item, index) => item + (checked.length - 1 == index ? "" : " ,")
+            )}
+        </div>
+
         <div className="icon-dropdown">
           <ArrowDown />
         </div>
       </div>
       <div className={"list-dropdown " + (isShow ? "active" : "")}>
+        <FormControlLabel
+          key={"all"}
+          control={
+            <Checkbox checked={checkedAll} onChange={() => SelectAllItem()} />
+          }
+          label={"All categories"}
+        />
         {menu.map((item, index) => {
           return (
             <FormControlLabel
               key={index.toString()}
               control={
                 <Checkbox
-                  checked={item == checked}
+                  checked={checked.includes(item)}
                   onChange={() => SelectItem(item)}
                 />
               }
@@ -66,8 +110,15 @@ function Search() {
         community of developers.
       </div>
       <div className="search__content">
-        <div>
+        <div className="search__content--dropdown">
           <Categories />
+        </div>
+        <InputBase
+          placeholder="Tìm kiếm ..."
+          className="search__content--input"
+        />
+        <div className="search__content--search">
+          <SearchIcon />
         </div>
       </div>
     </div>
