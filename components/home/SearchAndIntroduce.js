@@ -4,15 +4,31 @@ import BgImage from "../../assets/images/login_bg_study.jpg";
 import ArrowDown from "../share/icons/ArrowDown";
 import Checkbox from "@material-ui/core/Checkbox";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 function Categories() {
   const menu = ["All categories", "Item1", "Item2", "Item3", "Item4"];
   const [checked, setChecked] = useState("All categories");
   const [isShow, setIsShow] = useState(false);
+  const wrapperRef = useRef(null);
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside, false);
+    return () => {
+      document.removeEventListener("click", handleClickOutside, false);
+    };
+  }, []);
+  const handleClickOutside = (event) => {
+    if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
+      setIsShow(false);
+    }
+  };
+  function SelectItem(item) {
+    setChecked(item);
+    // setIsShow(false)
+  }
 
   return (
-    <div className="dropdown-search">
+    <div className="dropdown-search" ref={wrapperRef}>
       <div className="content" onClick={() => setIsShow(!isShow)}>
         {checked}
         <div className="icon-dropdown">
@@ -27,7 +43,7 @@ function Categories() {
               control={
                 <Checkbox
                   checked={item == checked}
-                  onChange={() => setChecked(item)}
+                  onChange={() => SelectItem(item)}
                 />
               }
               label={item}
