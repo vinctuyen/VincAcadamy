@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import { Carousel } from "react-responsive-carousel";
 import Button from "@material-ui/core/Button";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
@@ -6,6 +7,7 @@ import MailOutlineIcon from "@material-ui/icons/MailOutline";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Checkbox from "@material-ui/core/Checkbox";
 import { withRouter } from "next/router";
+import { sagaActions } from "../store/sagas/typeSagas";
 
 import BgImage from "../assets/images/login_bg_study.jpg";
 import facebook from "../assets/images/facebook.png";
@@ -61,6 +63,11 @@ class Login extends React.Component {
       return true;
     });
   }
+  componentDidUpdate() {
+    if (this.props.login.status == 200) {
+      this.props.router.push("/");
+    }
+  }
   handleChange = (event) => {
     const { formData } = this.state;
     if (event.target.name == "remember") {
@@ -76,8 +83,12 @@ class Login extends React.Component {
     }
   };
 
-  handleSubmit = () => {
-    this.props.router.push("/");
+  handleSubmit = async () => {
+    let data = {
+      email: this.state.formData.email,
+      password: this.state.formData.password,
+    };
+    await this.props.loginAction(data);
   };
   render() {
     const { formData, submitted, canSubmit } = this.state;
@@ -208,4 +219,11 @@ class Login extends React.Component {
     );
   }
 }
-export default withRouter(Login);
+const mapStateToProps = (state) => ({
+  login: state.login.data,
+});
+const mapActionsToProps = (dispatch) => ({
+  loginAction: (data) => dispatch({ type: sagaActions.LOGIN, data }),
+});
+const LoginConnect = connect(mapStateToProps, mapActionsToProps)(Login);
+export default withRouter(LoginConnect);

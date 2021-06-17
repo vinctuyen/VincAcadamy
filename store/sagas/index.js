@@ -1,20 +1,7 @@
-/**
- * @author Vinc Tuyen
- * Saga index: connects action type and saga
- */
+import { takeEvery } from "redux-saga/effects";
+import { sagaActions } from "./typeSagas";
+import { login } from "./auth/login";
 
- import { takeEvery, all } from 'redux-saga/effects'
-
- /* ------------- Types ------------- */
- 
- import { CountTypes } from '../reducers/demo'
- 
- /* ------------- Sagas ------------- */
- import CountSagas from './module/demo'
- 
- /* ------------- Connect Types To Sagas ------------- */
- export default function*  root() {
-   yield all ([
-     takeEvery(CountTypes.COUNT_REQUEST, CountSagas.increase),
-   ])
- }
+export default function* rootSaga() {
+  yield takeEvery(sagaActions.LOGIN, login);
+}
