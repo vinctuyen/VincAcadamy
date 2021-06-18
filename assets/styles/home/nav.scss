@@ -28,9 +28,27 @@
     .auth-function {
       padding-left: 12px;
     }
+    .auth-profile {
+      padding-left: 10px;
+      display: flex;
+      align-items: center;
+      .MuiAvatar-colorDefault {
+        background-color: #40a944;
+      }
+      span {
+        padding-left: 5px;
+      }
+    }
   }
 }
-
+.menu-personal {
+  .MuiPaper-root {
+    top: 60px !important;
+  }
+  .MuiListItemIcon-root {
+    min-width: 30px !important;
+  }
+}
 .nav-bar {
   border-bottom: 1px solid #e5e5e5;
   .container {

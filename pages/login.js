@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { withCookies, Cookies } from "react-cookie";
 import { Carousel } from "react-responsive-carousel";
 import Button from "@material-ui/core/Button";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
@@ -45,15 +46,21 @@ const styleRegisterBtn = {
   boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
 };
 class Login extends React.Component {
-  state = {
-    formData: {
-      email: "",
-      password: "",
-      remember: true,
-    },
-    submitted: false,
-    canSubmit: false,
-  };
+  constructor(props) {
+    super(props);
+
+    const { cookies } = props;
+    this.state = {
+      formData: {
+        email: "",
+        password: "",
+        remember: true,
+      },
+      submitted: false,
+      canSubmit: false,
+    };
+  }
+
   componentDidMount() {
     // custom rule will have name 'min'
     ValidatorForm.addValidationRule("min", (value, min) => {
@@ -91,6 +98,7 @@ class Login extends React.Component {
     this.props.setLoading(true);
     await this.props.loginAction(data);
     setTimeout(() => {
+      this.props.cookies.set("id", this.props.login.id);
       this.props.setLoading(false);
     }, 1000);
   };
@@ -231,4 +239,4 @@ const mapActionsToProps = (dispatch) => ({
   setLoading: (data) => dispatch({ type: sagaActions.SET_LOADING, data }),
 });
 const LoginConnect = connect(mapStateToProps, mapActionsToProps)(Login);
-export default withRouter(LoginConnect);
+export default withRouter(withCookies(LoginConnect));
