@@ -12,7 +12,5 @@ export async function loginApi({ email, password }) {
   query.docs.forEach((item) => {
     user.info = item.data();
   });
-  setTimeout(() => {
-    return user;
-  }, 10000);
+  return user;
 }
