@@ -6,11 +6,13 @@ export async function loginApi({ email, password }) {
     .where("password", "==", password)
     .get();
   if (!query.docs.length) {
-    return { status: 404, message: "Sai tài khoản hoặc mật khẩu" };
+    throw { status: 404, message: "Sai tài khoản hoặc mật khẩu" };
   }
   let user = { status: 200, info: {} };
   query.docs.forEach((item) => {
     user.info = item.data();
   });
-  return user;
+  setTimeout(() => {
+    return user;
+  }, 10000);
 }

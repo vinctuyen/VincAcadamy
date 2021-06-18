@@ -88,7 +88,11 @@ class Login extends React.Component {
       email: this.state.formData.email,
       password: this.state.formData.password,
     };
+    this.props.setLoading(true);
     await this.props.loginAction(data);
+    setTimeout(() => {
+      this.props.setLoading(false);
+    }, 1000);
   };
   render() {
     const { formData, submitted, canSubmit } = this.state;
@@ -224,6 +228,7 @@ const mapStateToProps = (state) => ({
 });
 const mapActionsToProps = (dispatch) => ({
   loginAction: (data) => dispatch({ type: sagaActions.LOGIN, data }),
+  setLoading: (data) => dispatch({ type: sagaActions.SET_LOADING, data }),
 });
 const LoginConnect = connect(mapStateToProps, mapActionsToProps)(Login);
 export default withRouter(LoginConnect);
