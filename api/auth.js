@@ -23,3 +23,11 @@ export async function checkUserExist(id) {
   }
   return false;
 }
+
+export async function getUserInfo(id) {
+  const query = await db.collection("users").doc(id).get();
+  if (query.exists) {
+    return query.data();
+  }
+  return {};
+}

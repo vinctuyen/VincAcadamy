@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useCookies } from "react-cookie";
-import { useRouter } from 'next/router'
+import { useRouter } from "next/router";
 import ArrowDown from "./icons/ArrowDown";
 import Container from "@material-ui/core/Container";
 import Avatar from "@material-ui/core/Avatar";
@@ -11,9 +11,9 @@ import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import Typography from "@material-ui/core/Typography";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 
-function NavAuth() {
+function NavAuth(props) {
   const [cookies, setCookie, removeCookie] = useCookies(["id"]);
-  const router = useRouter()
+  const router = useRouter();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const listFunc = ["User profile", "Logout"];
   const openMenuPersonal = (event) => {
@@ -23,7 +23,7 @@ function NavAuth() {
   const closeMenuPersonal = (e, reason) => {
     if (reason == "Logout") {
       removeCookie("id");
-      router.push('/login')
+      router.push("/login");
     }
     if (reason == "backdropClick") {
       console.log("backdropClick");
@@ -40,16 +40,18 @@ function NavAuth() {
           </div>
         </div>
         <span className="sign">|</span>
-        <div className="auth-function">Đăng nhập / Đăng kí</div>
+        <div className="auth-function">
+          {!props.data ? "Đăng nhập / Đăng kí" : ""}
+        </div>
         <div className="auth-profile">
           <Avatar
-            alt="Dindy Baker"
-            src="/static/images/avatar/3.jpg"
+            alt={props.data.name}
+            src={props.data.avatar}
             aria-controls="menu-personal"
             aria-haspopup="true"
             onClick={openMenuPersonal}
           />
-          <span>Cindy Baker</span>
+          <span>{props.data.name}</span>
           <Menu
             id="menu-personal"
             anchorEl={anchorEl}
@@ -109,11 +111,11 @@ function NavBar() {
   );
 }
 
-export default function Nav() {
+export default function Nav(props) {
   return (
     <div className="nav">
-      <NavAuth />
-      <NavBar />
+      <NavAuth {...props} />
+      <NavBar {...props} />
     </div>
   );
 }

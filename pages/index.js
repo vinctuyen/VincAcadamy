@@ -23,7 +23,7 @@ export const getServerSideProps = async (ctx) => {
   } else {
     return {
       props: {
-        data: posts,
+        data: isUserExist,
       },
     };
   }
@@ -34,7 +34,7 @@ export default function Home(props) {
 
   return (
     <div className>
-      <Nav />
+      <Nav {...props} />
       <SearchAndIntroduce />
       <div className="divide"></div>
     </div>
