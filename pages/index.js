@@ -4,9 +4,11 @@ import SearchAndIntroduce from "../components/home/SearchAndIntroduce";
 import "../api/auth";
 import { parseCookies } from "../helper";
 import { checkUserExist } from "../api/auth";
+import {getCategoriesTypeQuestions} from '../api/questions'
 export const getServerSideProps = async (ctx) => {
   const data = parseCookies(ctx.req);
   let isUserExist = await checkUserExist(data.id);
+  let categories = await getCategoriesTypeQuestions()
   if (ctx.res) {
     if (Object.keys(data).length === 0 && data.constructor === Object) {
       ctx.res.writeHead(301, { Location: "/" });
@@ -24,6 +26,7 @@ export const getServerSideProps = async (ctx) => {
     return {
       props: {
         data: isUserExist,
+        categories
       },
     };
   }
@@ -35,7 +38,7 @@ export default function Home(props) {
   return (
     <div className>
       <Nav {...props} />
-      <SearchAndIntroduce />
+      <SearchAndIntroduce {...props} />
       <div className="divide"></div>
     </div>
   );

@@ -7,11 +7,11 @@ import Checkbox from "@material-ui/core/Checkbox";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import InputBase from "@material-ui/core/InputBase";
 import React, { useState, useRef, useEffect } from "react";
-
-function Categories() {
-  const menu = ["Item1", "Item2", "Item3", "Item4"];
+import {getQuestion } from '../../api/questions'
+function Categories(props) {
+  const menu = props.categories;
   const [checkedAll, setCheckedAll] = useState(true);
-  const [checked, setChecked] = useState(menu);
+  const [checked, setChecked] = useState(menu.map(item => item.id));
   const [isShow, setIsShow] = useState(false);
   const wrapperRef = useRef(null);
   useEffect(() => {
@@ -64,7 +64,9 @@ function Categories() {
           {!checked.length && "All categories"}
           {!checkedAll &&
             checked.map(
-              (item, index) => item + (checked.length - 1 == index ? "" : " ,")
+              (item, index) => {
+                let data = menu.filter(category => category.id == item)
+                return data[0].name + (checked.length - 1 == index ? "" : " ,")}
             )}
         </div>
 
@@ -86,11 +88,11 @@ function Categories() {
               key={index.toString()}
               control={
                 <Checkbox
-                  checked={checked.includes(item)}
-                  onChange={() => SelectItem(item)}
+                  checked={checked.includes(item.id)}
+                  onChange={() => SelectItem(item.id)}
                 />
               }
-              label={item}
+              label={item.name}
             />
           );
         })}
@@ -99,7 +101,10 @@ function Categories() {
   );
 }
 
-function Search() {
+function Search(props) {
+  const handleSearch = (e) => {
+    console.log(e.target.value)
+  }
   return (
     <div className="search">
       <div className="search__title">
@@ -111,11 +116,12 @@ function Search() {
       </div>
       <div className="search__content">
         <div className="search__content--dropdown">
-          <Categories />
+          <Categories {...props} />
         </div>
         <InputBase
           placeholder="Tìm kiếm ..."
           className="search__content--input"
+          onChange={handleSearch}
         />
         <div className="search__content--search">
           <SearchIcon />
@@ -159,10 +165,10 @@ function Introduce() {
   );
 }
 
-export default function SearchAndIntroduce() {
+export default function SearchAndIntroduce(props) {
   return (
     <Container maxWidth="lg" className="search-introduce">
-      <Search />
+      <Search {...props} />
       <Introduce />
     </Container>
   );
