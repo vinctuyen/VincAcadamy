@@ -22,21 +22,24 @@ export async function updateQuestion({ question, categories, answer, id }) {
 }
 
 export async function getQuestion({ keyword, categories }) {
+  if (!keyword) {
+    return [];
+  }
   try {
     let query = null;
     if (!categories?.length) {
-      query = await db.collection("questions").where("question", ">=", keyword);
+      query = await db.collection("questions").where("question", ">=", keyword).limit(10);
     } else {
       query = await db
         .collection("questions")
         .where("question", ">=", keyword)
-        .where("categories", "in", categories);
+        .where("categories", "in", categories).limit(10);
     }
     const questions = await query.get();
-    if (questions.exists) {
-      return questions.data();
+    if (questions.docs.length) {
+      return questions.docs.map((doc) => doc.data());
     }
-    return {};
+    return [];
   } catch (error) {
     return { status: 400, message: "get question error" };
   }
@@ -93,7 +96,7 @@ export async function getCategoriesTypeQuestions() {
   try {
     const query = await db.collection("CategoriesTypeQuestions").get();
     if (query) {
-      return query.docs.map(doc => doc.data());
+      return query.docs.map((doc) => doc.data());
     }
     return {};
   } catch (error) {
