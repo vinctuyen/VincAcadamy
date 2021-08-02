@@ -11,8 +11,11 @@ import { getQuestion } from "../../../api/questions";
 export function* search(payload) {
   try {
     let result = yield getQuestion(payload.data);
-    // let data = result.map((item) => item.question);
-    yield put(searchReducer(result));
+    if (result.status && result.status != 200) {
+      yield put(addNotify(result));
+    } else {
+      yield put(searchReducer(result));
+    }
   } catch (e) {
     yield put(addNotify(e));
   }

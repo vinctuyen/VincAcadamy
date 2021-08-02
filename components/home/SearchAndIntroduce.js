@@ -51,7 +51,6 @@ function Categories(props) {
   function SelectItem(item) {
     let newSelect = updateArr(checked, item);
     setChecked(newSelect);
-    console.log(item);
     let data = newSelect;
     dispatch({ type: sagaActions.UPDATE_CATEGORIES, data });
   }
@@ -61,7 +60,8 @@ function Categories(props) {
       setChecked([]);
       setCheckedAll(false);
     } else {
-      setChecked(menu);
+      let data = menu.map((item) => item.id);
+      setChecked(data);
       setCheckedAll(true);
     }
     let data = menu.map((item) => item.id);
@@ -116,9 +116,20 @@ function Search(props) {
   const dispatch = useDispatch();
   const categories = useSelector((state) => state.search.categories);
   const listSearchQuestion = useSelector((state) => state.search.data);
-
   const [isOpenMenuResultSearch, setOpenMenuResultSearch] =
     React.useState(true);
+  const wrapperRef = useRef(null);
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside, false);
+    return () => {
+      document.removeEventListener("click", handleClickOutside, false);
+    };
+  }, []);
+  const handleClickOutside = (event) => {
+    if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
+      setOpenMenuResultSearch(false);
+    }
+  };
 
   const handleSearch = (e) => {
     let data = { keyword: e.target.value, categories: categories };
@@ -141,7 +152,7 @@ function Search(props) {
         <div className="search__content--dropdown">
           <Categories {...props} />
         </div>
-        <div className="search__content--input">
+        <div className="search__content--input" ref={wrapperRef}>
           <InputBase
             className="input-search"
             placeholder="Tìm kiếm ..."
@@ -152,7 +163,10 @@ function Search(props) {
               <List className="menu" onClose={handleSearchDetail}>
                 {listSearchQuestion.map((item, index) => {
                   return (
-                    <ListItem onClick={(e) => handleSearchDetail(e, index)} className="item-menu button">
+                    <ListItem
+                      onClick={(e) => handleSearchDetail(e, index)}
+                      className="item-menu button"
+                    >
                       <ListItemText primary={item.question} />
                     </ListItem>
                   );
